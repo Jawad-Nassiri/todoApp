@@ -1100,3 +1100,8 @@ input.input {
   visibility: visible;
   opacity: 1;
 }
+
+
+.fa-solid.fa-check {
+  color: #fff
+}
