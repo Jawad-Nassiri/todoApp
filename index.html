@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="title">
+        <h1>Sabzlearn - Todo List</h1>
+      </div>
+
+      <div class="header-buttons">
+        <div class="sort-card">
+          <button class="sort-button">
+            <span>All</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <div class="sort-menu">
+            <button value="default">All</button>
+            <button value="completed">Completed</button>
+            <button value="uncompleted">Uncompleted</button>
+            <button value="important">Important</button>
+          </div>
+        </div>
+        <button class="open-modal-button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-4"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          Create Task
+        </button>
+      </div>
+
+      <section class="todos-container">
+        <!-- Todos Added By Js -->
+      </section>
+    </div>
+
+    <div class="modal-screen hidden">
+      <div class="modal">
+        <header>
+          <button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <span>Create Todo</span>
+        </header>
+        <main>
+          <div class="input-card">
+            <input
+              type="text"
+              class="input"
+              placeholder="Enter todo title..."
+            />
+          </div>
+
+          <div class="modal-checkbox">
+            <input type="checkbox" name="" id="has-date" />
+            <label for="has-date">Add date</label>
+          </div>
+        </main>
+        <footer>
+          <button class="cancel">Cancel</button>
+          <button class="create">Create</button>
+        </footer>
+      </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
