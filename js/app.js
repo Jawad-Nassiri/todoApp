@@ -1,91 +1,175 @@
-const modal = document.querySelector(".modal-screen");
-const openModalBtn = document.querySelector(".open-modal-button");
-const cancelTodoBtn = document.querySelector(".cancel");
-const createTodoBtn = document.querySelector(".create");
-const todoInput = document.querySelector(".input");
-const todosContainer = document.querySelector(".todos-container");
+const addTodoBtn = document.querySelector('.open-modal-button')
+const modalScreen = document.querySelector('.modal-screen')
+const modal = document.querySelector('.modal')
+const xBtn = document.querySelector('.x-btn')
+const cancelBtn = document.querySelector('.cancel')
+const inputElement = document.querySelector('input')
+const createTodoBtn = document.querySelector('.create')
+const todosContainer = document.querySelector('.todos-container')
 
-const todos = [];
 
-function showModal() {
-  modal.classList.remove("hidden");
-}
 
-function hideModal() {
-  modal.classList.add("hidden");
-}
+
+
+
+let todos = []
+
+
+
+
 
 function addTodo() {
-  const todoTitle = todoInput.value;
-
-  const newTodo = {
-    id: Math.floor(Math.random() * 9999),
-    title: todoTitle,
-    isComplete: false,
-  };
-
-  todos.push(newTodo);
-  todoInput.value = "";
-
-  saveInToLocalStorage(todos);
-  showTodos();
-  hideModal();
+    modalScreen.classList.remove('hidden')
 }
+
+
+function hideModal() {
+    modalScreen.classList.add('hidden')
+}
+
+
+document.addEventListener('keydown', (evt) => {
+    if(evt.key === "Escape") {
+        hideModal();
+    }
+})
+
+
+document.addEventListener('keydown', (evt) => {
+    if(evt.key === "Enter") {
+        createTodo()
+    }
+})
+
+
+document.addEventListener('click', (evt) => {
+    if(!modal.contains(evt.target) && !addTodoBtn.contains(evt.target)) {
+        hideModal();
+    }
+})
+
+
+function createTodo() {
+    let todoTitle = inputElement.value
+
+    if(inputElement.value !== "") {
+        let newTodo = {
+            id: `todo-${Math.floor(Math.random() * 9999).toString().padStart(4, '0')}`,
+            title: todoTitle,
+            isCompleted: false
+        }
+
+        todos.push(newTodo)
+
+        setToLocalstorage(todos)
+
+        inputElement.value = ""
+
+        hideModal();
+
+        showTodos()
+    }
+}
+
+
+
+function setToLocalstorage(array) {
+    localStorage.setItem('todos', JSON.stringify(array))
+}
+
+
 
 function showTodos() {
-  todosContainer.innerHTML = "";
+    todosContainer.innerHTML = "";
 
-  todos.forEach(function (todo) {
-    todosContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-        <article class="todo">
-          <div class="todo-data">
-            <div class="checkbox">
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m4.5 12.75 6 6 9-13.5"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div>
-              <p class="todo-title">${todo.title}</p>
-            </div>
-          </div>
+    todos.forEach(function (todo) {
+        todosContainer.insertAdjacentHTML(
+            "beforeend",
+            `
+            <article class="todo" id="${todo.id}">
+                <div class="todo-data">
+                    <div class="checkbox">
+                        <i class="fa-solid"></i>
+                    </div>
+                    <div>
+                        <p class="todo-title">${todo.title}</p>
+                    </div>
+                </div>
 
-          <div class="todo-buttons">
-            <button class="delete">حذف</button>
-            <div class="relative">
-              <button class="status">وضعیت</button>
-              <ui class="status-menu">
-                <li value="default">معمولی</li>
-                <li value="important">مهم</li>
-                <li value="very-important">خیلی مهم</li>
-              </ui>
-            </div>
-            <button class="complete">تکمیل</button>
-          </div>
-        </article>
-      `
-    );
-  });
+                <div class="todo-buttons">
+                    <button class="delete">Delete</button>
+                    <button class="complete">Complete</button>
+                </div>
+            </article>
+            `
+        );
+    });
 }
 
-function saveInToLocalStorage(todosArray) {
-  localStorage.setItem("todos", JSON.stringify(todosArray));
+
+function getData() {
+    let todosData = JSON.parse(localStorage.getItem("todos"))
+
+    if(todosData) {
+        todos = todosData
+        showTodos()
+    }
+
 }
 
-openModalBtn.addEventListener("click", showModal);
-cancelTodoBtn.addEventListener("click", hideModal);
-createTodoBtn.addEventListener("click", addTodo);
+getData()
+
+
+
+function removeTodo(event) {
+    if (event.target.className === "delete") {
+        let parentElement = event.target.closest('article');
+        let todoId = parentElement.id;
+
+        todos = todos.filter(todo => todo.id !== todoId);
+
+        showTodos();
+
+        setToLocalstorage(todos);
+
+    }
+}
+
+
+
+function completeHandler(event) {
+    if (event.target.classList.contains('complete')) {
+
+        const todoElement = event.target.closest('article');
+
+        const checkIcon = todoElement.querySelector('.fa-solid');
+
+        const todoTitle = todoElement.querySelector('.todo-title');
+
+
+        if (checkIcon) {
+            checkIcon.classList.toggle('fa-check');
+        }
+
+        if(todoTitle) {
+            todoTitle.classList.toggle('line-trough')
+        }
+    }
+}
+
+
+
+addTodoBtn.addEventListener('click', addTodo)
+xBtn.addEventListener('click', hideModal)
+cancelBtn.addEventListener('click', hideModal)
+createTodoBtn.addEventListener('click', createTodo)
+todosContainer.addEventListener('click', removeTodo)
+todosContainer.addEventListener('click', completeHandler)
+
+
+
+
+
+
+
+

@@ -572,29 +572,6 @@ video {
   height: 1.5rem;
 }
 
-@font-face {
-  font-family: "Sans-Regular";
-
-  src: url(../fonts/Sans-Regular.ttf);
-}
-
-@font-face {
-  font-family: "Sans-Medium";
-
-  src: url(../fonts/Sans-Medium.ttf);
-}
-
-@font-face {
-  font-family: "Sans-DemiBold";
-
-  src: url(../fonts/Sans-DemiBold.ttf);
-}
-
-@font-face {
-  font-family: "Sans-Bold";
-
-  src: url(../fonts/Sans-Bold.ttf);
-}
 
 body {
   display: flex;
@@ -786,6 +763,12 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.todo-title.line-trough {
+  text-decoration: line-through;
+  text-decoration-color: red;
+  text-decoration-thickness: 2px;
 }
 
 .checkbox {
